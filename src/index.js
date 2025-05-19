@@ -42,13 +42,23 @@ app.use(stripeWebhookMiddleware);
 app.use(helmet()); // Security headers
 app.use(compression()); // Compress responses
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'], // Allow both admin dashboard and potential frontend origins
-  credentials: true,
+  origin: '*', // DRASTIC DEBUG: Allow all origins
+  credentials: true, // Note: credentials:true with origin:'*' can be problematic but good for this test
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(morgan('dev')); // HTTP request logger
+
+// Root endpoint for default health check
+app.get('/', (req, res) => {
+  res.status(200).send('OK - V3 TEST'); // Specific message for deployment confirmation
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', message: 'Server is running' });
+});
 
 // Apply rate limiting with different configurations for regular and admin routes
 const apiLimiter = rateLimit({
@@ -77,11 +87,6 @@ app.use('/api/users', apiLimiter);
 app.use('/api/categories', apiLimiter);
 app.use('/api/subscriptions', apiLimiter);
 app.use('/api/prompts', apiLimiter);
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'UP', message: 'Server is running' });
-});
 
 // Mount routes
 app.use('/api/auth', authRoutes);

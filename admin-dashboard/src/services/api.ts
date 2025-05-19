@@ -12,7 +12,7 @@ import type {
 } from '../types';
 
 // API base URL
-const API_URL = 'http://localhost:5010/api';
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5010/api';
 
 // Create axios instance
 const api = axios.create({
