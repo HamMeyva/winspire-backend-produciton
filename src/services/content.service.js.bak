@@ -1,0 +1,732 @@
+const OpenAI = require('openai');
+const Content = require('../models/content.model');
+const AppError = require('../utils/appError');
+
+// IMPORTANT: OPENAI API KEY MUST BE SET IN ENVIRONMENT VARIABLES
+if (!process.env.OPENAI_API_KEY) {
+  console.error("-------------------------------------------");
+  console.error("CRITICAL ERROR: OPENAI_API_KEY IS NOT SET");
+  console.error("Content generation WILL FAIL until fixed");
+  console.error("-------------------------------------------");
+  
+  // Deliberately throw an error at startup to prevent server from running without API key
+  throw new Error('OpenAI API key (OPENAI_API_KEY) is not set in environment variables');
+}
+
+// Initialize OpenAI client directly with the API key - ALWAYS use real API
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  timeout: 120000, // 2 minute timeout for API calls
+  maxRetries: 3, // Allow 3 retries for failed API calls
+});
+
+console.log("-------------------------------------------");
+console.log("OpenAI API initialized with real API key");
+console.log("MOCK DATA COMPLETELY REMOVED - REAL API ONLY");
+console.log("-------------------------------------------");
+
+
+// Find the validateGeneratedContent function or add it if it doesn't exist
+const validateGeneratedContent = (content) => {
+  if (Array.isArray(content)) {
+    // Validate an array of content items
+    if (content.length === 0) {
+      throw new Error('Generated content array is empty');
+    }
+    
+    content.forEach((item, index) => {
+      if (!item.title || !item.body) {
+        throw new Error(`Generated content item ${index + 1} is missing required fields`);
+      }
+    });
+    
+    return content;
+  } else {
+    // Validate a single content item
+    if (!content.title || !content.body) {
+      throw new Error('Generated content is missing required fields');
+    }
+    
+    return content;
+  }
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+
+/**
+ * Generate content using OpenAI API
+ * @param {Object} category - Category document
+ * @param {String} topic - Specific topic (optional)
+ * @param {String} difficulty - Difficulty level (beginner, intermediate, advanced)
+ * @param {String} customPrompt - Custom prompt to override default
+ * @param {String} model - AI model to use for generation
+ * @returns {Object} Generated content
+ */
+exports.generateWithAI = async (category, topic, difficulty = 'beginner', customPrompt = null, model = 'gpt-4-turbo-preview') => {
+  const AppError = require('../utils/appError');
+  
+  // Force use of real OpenAI API - no mock data
+  if (!process.env.OPENAI_API_KEY) {
+    console.error("CRITICAL ERROR: No OpenAI API key provided");
+    throw new AppError('OpenAI API key is required for content generation. Please check your environment configuration.', 500);
+  }
+  
+  console.log("Using real OpenAI API for content generation with model:", model);
+
+  let actualPrompt = customPrompt;
+  
+  // If the category object is populated, determine which prompt to use
+  if (category) {
+    console.log(`Generating content for category: ${category.name}, promptType: ${category.promptType}`);
+    
+    if (category.promptType === 'single' && category.singlePrompt) {
+      console.log('Using singlePrompt from category');
+      actualPrompt = category.singlePrompt;
+    } else if (category.promptType === 'multiple' && category.multiplePrompt) {
+      console.log('Using multiplePrompt from category');
+      actualPrompt = category.multiplePrompt;
+    } else if (category.prompt) {
+      // Fall back to legacy prompt field
+      console.log('Using legacy prompt field from category');
+      actualPrompt = category.prompt;
+    } else {
+      console.log('No prompt found in category');
+    }
+  } else {
+    console.log('Category object is not provided or invalid');
+  }
+  
+  // If no prompt was found or provided, construct a generic one
+  if (!actualPrompt) {
+    console.warn(`No specific prompt found for category '${category?.name || "unknown"}' and no custom prompt provided. Using generic prompt.`);
+    const genericSystemPrompt = 
+      `You are an expert content creator for a lifestyle hacks app. 
+      You specialize in the category "${category?.name || "lifestyle"}": ${category?.description || 'various topics'}.
+      Create a ${difficulty} level life hack or tip that provides practical, actionable advice.
+      The content should be engaging, informative, and valuable to users.
+      `;
+    const genericUserPrompt = topic 
+      ? `Create a life hack about "${topic}" for the ${category?.name || "lifestyle"} category.` 
+      : `Create an original life hack for the ${category?.name || "lifestyle"} category.`;
+    actualPrompt = genericSystemPrompt + '\n\n' + genericUserPrompt; // Simplified combination
+  }
+  
+  // Content structure requirements - make sure this is clear and explicit for JSON formatting
+  const formatPrompt = `
+Your response must be a valid JSON object with the following fields:
+- title: A concise, engaging title (max 80 characters)
+- summary: A brief summary (max 150 characters)
+- body: Detailed content with formatting (markdown supported, 300-600 characters)
+- tags: An array of 3-5 relevant keywords/tags
+
+FORMAT YOUR RESPONSE AS CLEAN JSON WITHOUT ANY EXPLANATION TEXT BEFORE OR AFTER IT.
+ENSURE THERE ARE NO CONTROL CHARACTERS OR INVALID ESCAPE SEQUENCES IN YOUR JSON.
+`;
+
+  // Check if the actualPrompt already contains JSON instructions
+  const finalPrompt = actualPrompt.toLowerCase().includes('json') 
+                        ? actualPrompt 
+                        : actualPrompt + formatPrompt;
+
+  try {
+    // First try with explicit response format (for newer models that support it)
+    const requestOptions = {
+      model: model,
+      messages: [
+        { role: 'system', content: 'You are a content generation assistant that responds with valid, well-formatted JSON.' },
+        { role: 'user', content: finalPrompt }
+      ],
+      temperature: 0.7
+    };
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+    
+    // Only add response_format for models that support it
+    // This list may need to be updated as OpenAI releases new models
+    const modelsWithJsonFormat = [
+      'gpt-4-turbo-preview', 'gpt-4-1106-preview', 'gpt-4-0125-preview', 
+      'gpt-4.1', 'gpt-4o', 'gpt-4.1-mini', 'gpt-4o-mini'
+    ];
+    
+    if (modelsWithJsonFormat.includes(requestOptions.model)) {
+      requestOptions.response_format = { type: "json_object" };
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+    } else {
+      // For models without response_format support, emphasize JSON format in the prompt
+      requestOptions.messages[0].content += ' Return ONLY valid JSON with no explanations before or after.';
+      requestOptions.messages[1].content += '\n\nIMPORTANT: Return ONLY a valid JSON object with no text before or after.';
+    }
+    
+    // Make the API call
+    console.log(`Making OpenAI API call with model: ${requestOptions.model}`);
+    let startTime = Date.now();
+    
+    // Add timeout handling
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('OpenAI API request timed out after 110 seconds')), 110000)
+    );
+    
+    const apiCallPromise = openai.chat.completions.create(requestOptions);
+    
+    // Race between the API call and the timeout
+    const response = await Promise.race([apiCallPromise, timeoutPromise]);
+    
+    const duration = Date.now() - startTime;
+    console.log(`OpenAI API call completed in ${duration}ms`);
+    
+    // Handle the response
+    const responseText = response.choices[0].message.content.trim();
+    
+    // Try to parse the JSON
+    let content;
+    try {
+      content = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error('JSON parsing error:', parseError);
+      console.log('Raw response:', responseText);
+      
+      // Try to extract JSON from the response if it's wrapped with other text
+      // This is useful for models that don't strictly adhere to the JSON-only instruction
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          content = JSON.parse(jsonMatch[0]);
+        } catch (extractError) {
+          // If extraction fails, continue with the cleaning approach
+          throw parseError;
+        }
+      } else {
+        // If no JSON-like structure is found, try cleaning the string
+        const cleanedText = responseText
+          .replace(/[\u0000-\u001F\u007F-\u009F]/g, "") // Remove control characters
+          .replace(/\\(?!["\\/bfnrt])/g, "\\\\"); // Escape backslashes properly
+            
+        try {
+          content = JSON.parse(cleanedText);
+        } catch (secondParseError) {
+          console.error('Second JSON parse attempt failed:', secondParseError);
+          throw new Error('Could not parse AI-generated content');
+        }
+      }
+    }
+    
+    // Validate the parsed content - could be single object or array of objects
+    return validateGeneratedContent(content);
+  } catch (error) {
+    console.error('OpenAI API error:', error);
+    
+    // Handle specific error types
+    if (error.message.includes('timed out')) {
+      console.error('OpenAI API request timed out');
+      throw new AppError('Content generation timed out. Please try again or reduce the number of items to generate.', 408);
+    }
+    
+    // Check if it's a rate limit error
+    if (error.status === 429) {
+      console.error('OpenAI API rate limit exceeded');
+      throw new AppError('OpenAI API rate limit exceeded. Please try again in a few minutes.', 429);
+    }
+    
+    // NEVER fall back to mock data - force the use of the real API
+    console.error("OpenAI API call failed - no fallback to mock data is available");
+    
+    throw new AppError(`Failed to generate content with AI: ${error.message}`, 500);
+  }
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+
+/**
+ * Find recyclable content based on popularity and engagement
+ * @param {Number} count - Number of content pieces to recycle
+ * @returns {Array} Array of content documents to recycle
+ */
+exports.findRecyclableContent = async (count = 10) => {
+  return await Content.findRecyclableContent(count);
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+
+/**
+ * Recycle content by updating publish date and incrementing recycle count
+ * @param {Array} contentIds - Array of content IDs to recycle
+ * @returns {Number} Number of successfully recycled content pieces
+ */
+exports.recycleContent = async (contentIds) => {
+  const today = new Date();
+  
+  const result = await Content.updateMany(
+    { _id: { $in: contentIds } },
+    {
+      $set: { publishDate: today },
+      $inc: { recycleCount: 1 },
+      $set: { lastRecycleDate: today }
+    }
+  );
+  
+  return result.modifiedCount;
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+
+/**
+ * Schedule content publication
+ * @param {String} contentId - Content ID to schedule
+ * @param {Date} publishDate - Date to publish content
+ * @returns {Object} Updated content document
+ */
+exports.scheduleContent = async (contentId, publishDate) => {
+  const content = await Content.findById(contentId);
+  
+  if (!content) {
+    throw new AppError('Content not found', 404);
+  }
+  
+  content.publishDate = publishDate;
+  content.status = 'pending';
+  
+  await content.save();
+  
+  return content;
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+
+/**
+ * Automatically generate daily content for all categories
+ * @param {Number} perCategory - Number of items to generate per category
+ * @returns {Object} Summary of generated content
+ */
+exports.generateDailyContent = async (perCategory = 10) => {
+  const Category = require('../models/category.model');
+  const categories = await Category.find({ active: true });
+  
+  const summary = {
+    total: 0,
+    byCategory: {},
+  };
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+  
+  for (const category of categories) {
+    summary.byCategory[category.name] = 0;
+    
+    // Generate content for each category
+    for (let i = 0; i < perCategory; i++) {
+      try {
+        // Generate content with varying difficulty levels
+        const difficulty = i < perCategory * 0.6 ? 'beginner' : 
+                          i < perCategory * 0.9 ? 'intermediate' : 'advanced';
+        
+        const generatedContent = await exports.generateWithAI(
+          category,
+          null, // No specific topic
+          difficulty,
+          null, // No custom prompt
+          'gpt-4o' // Use gpt-4o model as default for daily generation
+        );
+        
+        // Create new content in draft status
+        await Content.create({
+          title: generatedContent.title,
+          body: generatedContent.body,
+          summary: generatedContent.summary,
+          category: category._id,
+          status: 'draft', // Requires human moderation
+          source: 'ai',
+          authorId: process.env.ADMIN_USER_ID, // Default to system admin
+          tags: generatedContent.tags,
+          difficulty,
+        });
+        
+        summary.total++;
+        summary.byCategory[category.name]++;
+      } catch (error) {
+        console.error(`Error generating content for ${category.name}:`, error);
+      }
+    }
+  }
+  
+  return summary;
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+
+/**
+ * Generate multiple content items for a category
+ * @param {Object} category - Category document
+ * @param {Object} user - User document of the creator
+ * @param {String} contentType - Type of content to generate (hack, tip, hack2, tip2)
+ * @param {Number} count - Number of items to generate
+ * @param {String} difficulty - Difficulty level
+ * @param {String} model - AI model to use for generation
+ * @returns {Array} Array of generated content documents
+ */
+exports.generateMultipleContent = async (category, user, contentType, count = 10, difficulty = 'beginner', model = 'gpt-4-turbo-preview') => {
+  const promptService = require('./prompt.service');
+  const generatedContent = [];
+  
+  console.log(`Using model: ${model} for content generation`);
+  
+  // Fetch the full category object to get its prompt
+  // This assumes 'category' passed in might just be an ID or partial object.
+  let fullCategory = category;
+  if (typeof category === 'string') { // if category is an ID
+    const Category = require('../models/category.model');
+    fullCategory = await Category.findById(category);
+    if (!fullCategory) {
+      throw new AppError('Category not found', 404);
+    }
+  }
+  
+  // Ensure the category has the necessary properties
+  if (!fullCategory || !fullCategory._id) {
+    throw new AppError('Invalid category object provided', 400);
+  }
+  
+  // Always prioritize category's contentType if contentType param is not explicitly provided
+  const effectiveContentType = contentType || fullCategory.contentType || 'hack';
+  console.log(`Content generation using effective content type: ${effectiveContentType}`);
+  
+  // Get the appropriate prompt strategy for this category with the number of items to generate
+  let promptStrategy;
+  try {
+    };
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+    if (Array.isArray(content)) {
+      console.log(`Received ${content.length} content items from AI response`);
+      
+      // Process each item in the array
+      for (const item of content) {
+        if (item.title && item.body) {
+          // Create content in database
+          const newContent = await Content.create({
+            title: item.title,
+            body: item.body,
+            summary: item.summary || item.title,
+            category: fullCategory._id,
+            status: 'draft',
+            contentType: promptStrategy.contentType,
+            source: 'ai',
+            authorId: user._id,
+            tags: item.tags || [],
+            difficulty: difficulty,
+          });
+          
+          generatedContent.push(newContent);
+        }
+      }
+    } else {
+      // Handle as a single item (old behavior)
+      const newContent = await Content.create({
+        title: content.title,
+        body: content.body,
+        summary: content.summary,
+        category: fullCategory._id,
+        status: 'draft',
+        contentType: promptStrategy.contentType,
+        source: 'ai',
+        authorId: user._id,
+        tags: content.tags,
+        difficulty: difficulty,
+      });
+      
+      generatedContent.push(newContent);
+    }
+  } catch (error) {
+    console.error(`Error generating content: ${error.message}`);
+    throw new AppError(`Failed to generate content: ${error.message}`, 500);
+  }
+  
+  if (generatedContent.length === 0) {
+    throw new AppError('Failed to generate any content items', 500);
+  }
+  
+  return generatedContent;
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+
+/**
+ * Get appropriate prompt for a category and content type
+ * @param {String} categoryName - Name of the category
+ * @param {String} contentType - Type of content (hack, tip, quote)
+ * @returns {String} Appropriate prompt for AI generation
+ */
+function getPromptForCategoryAndType(categoryName, contentType) {
+  // This function might become obsolete or simplified if prompts are stored directly on categories.
+  // For now, it can serve as a fallback if a category doesn't have a direct prompt.
+  // Map category names to prompt categories 
+  const categoryMap = {
+    'Dating & Relationships': 'Dating',
+    'Money Management': 'Money',
+    'Fitness & Health': 'Fitness',
+    'Career & Leadership': 'Career',
+    'Social Skills': 'Social Skills',
+    'Psychology & Influence': 'Psychology',
+    'Mindfulness & Mental Health': 'Mind',
+    'Productivity': 'Productivity',
+    'Travel': 'Travel',
+    'Personal Power': 'Power',
+    'Survival': 'Survival',
+    'Trend': 'Trend',
+    'Dating Apps': 'Tinder',
+    'Money Saving': 'Money',
+    'Loopholes': 'Loophole',
+    'Business': 'Business',
+    'Lifestyle': 'Lifestyle'
+  };
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+  
+  // Default mappings
+  const defaultCategory = categoryName.split(' ')[0]; // Use first word of category as default
+  const mappedCategory = categoryMap[categoryName] || defaultCategory;
+  
+  // Map content types to prompt types
+  let promptType = '';
+  
+  if (contentType === 'hack' || contentType === 'tip') {
+    promptType = `${mappedCategory} Hacks - Tekli`;
+  } else if (contentType === 'quote') {
+    // For quotes, use the category-specific quote prompt if available
+    const quoteCategory = mappedCategory === 'Dating' ? 'Dating & Relationships'
+                      : mappedCategory === 'Money' ? 'Finance & Wealth Building'
+                      : mappedCategory === 'Fitness' ? 'Fitness & Nutrition'
+                      : mappedCategory === 'Career' ? 'Career & Leadership'
+                      : mappedCategory === 'Social' ? 'Social Skills'
+                      : mappedCategory === 'Psychology' ? 'Mindset & Motivation'
+                      : mappedCategory === 'Mind' ? 'Mindset & Motivation'
+                      : mappedCategory === 'Productivity' ? 'Productivity & Time Management'
+                      : 'Wisdom & Learning';
+                      
+    promptType = `${quoteCategory} - Tekli Prompt`;
+  } else if (contentType === 'guide') {
+    promptType = `${mappedCategory} Hacks - Tekli`;
+  }
+  
+  // Get the appropriate prompt based on category and content type
+  const prompts = {
+    'Dating Hacks - Tekli': 'Create a practical, actionable dating hack for busy adults that can be implemented quickly. The hack should help improve romantic interactions, attract potential partners, or strengthen existing relationships. Make it specific, ethical, and focused on real personal growth. Format as a catchy title followed by 1-3 paragraphs of clear instructions with real examples.',
+    'Money Hacks - Tekli': 'Create a practical financial life hack that helps people save money, increase income, or manage finances better. The hack should be legal, ethical, and specific enough for immediate implementation. Include a catchy title, followed by clear steps and at least one real-world example.',
+    'Power Hacks - Tekli': 'Create a practical power hack that helps people increase their personal or professional influence ethically. The hack should focus on communication skills, leadership presence, or strategic thinking that enhances one\'s ability to persuade or lead others. Include a catchy title followed by clear implementation steps and a real-world example.',
+    'Survival Hacks - Tekli': 'Create a practical survival hack that could help in emergency situations or difficult circumstances. The hack should use common items in innovative ways or teach a skill that increases chances of survival in challenging situations. Include a compelling title followed by clear instructions and a real-world application.',
+    'Trend Hacks - Tekli': 'Create a practical trend hack that helps people stay ahead of or capitalize on current cultural, tech, or social media trends. The hack should provide actionable ways to identify, understand, or leverage trends for personal or professional advantage. Include a catchy title followed by specific steps and a relevant example.',
+    'Tinder Hacks - Tekli': 'Create a practical, ethical Tinder hack that helps users improve their profile, increase meaningful matches, or have better conversations on the app. The hack should focus on authentic self-presentation and effective communication rather than manipulation. Include a catchy title followed by specific implementation steps and expected results.',
+    'Travel Hacks - Tekli': 'Create a practical travel hack that saves money, time, or enhances the travel experience. The hack should be applicable for most travelers and provide specific, actionable advice for before, during, or after a trip. Include a catchy title followed by clear implementation steps and a real-world example of its benefits.',
+    'Mind Hacks - Tekli': 'Create a practical cognitive or psychological hack that helps people improve their mental performance, emotional regulation, or decision-making. The hack should be based on scientific principles and provide actionable steps anyone can implement. Include a catchy title followed by clear instructions and the expected benefits.',
+    'Loophole Hacks - Tekli': 'Create a practical, legal loophole hack that helps people save money, time, or effort by taking advantage of overlooked rules, policies, or systems. The hack should be ethical, legal, and provide a creative solution to a common problem or expense. Include a catchy title followed by clear explanation and implementation steps.',
+    'Business Hacks - Tekli': 'Create a practical business hack that helps entrepreneurs or professionals improve productivity, reduce costs, or increase revenue. The hack should be specific, actionable, and applicable to various business sizes. Include a catchy title followed by clear implementation steps and one real-world example of its effectiveness.',
+    'Dating & Relationships - Tekli Prompt': 'Generate one random and practical dating or relationship tip as a quote inside quotation marks (1–2 sentences) from a book about love, attraction, communication, or relationship dynamics followed by the book title and author.',
+    'Finance & Wealth Building - Tekli Prompt': 'Generate one random and practical finance or wealth building tip as a quote inside quotation marks (1–2 sentences) from a book about money management, investing, financial freedom, or personal finance followed by the book title and author.',
+    'Mindset & Motivation - Tekli Prompt': 'Generate one random and practical mindset or motivation tip as a quote inside quotation marks (1–2 sentences) from a book about personal power, resilience, goal setting, or self-discipline followed by the book title and author.',
+    'Social Skills - Tekli Prompt': 'Generate one random and practical social skills tip as a quote inside quotation marks (1–2 sentences) from a book about communication, charisma, networking, or emotional intelligence followed by the book title and author.',
+    'Fitness & Nutrition - Tekli Prompt': 'Generate one random and practical fitness or nutrition tip as a quote inside quotation marks (1–2 sentences) from a book about exercise, healthy habits, diet science, or physical performance followed by the book title and author.',
+    'Career & Leadership - Tekli Prompt': 'Generate one random and practical career or leadership tip as a quote inside quotation marks (1–2 sentences) from a book about professional development, management, entrepreneurship or career growth followed by the book title and author.',
+    'Productivity & Time Management - Tekli Prompt': 'Generate one random and practical productivity or time management tip as a quote inside quotation marks (1–2 sentences) from a book about efficiency, focus, organization, or work optimization followed by the book title and author.',
+    'Wisdom & Learning - Tekli Prompt': 'Generate one random and practical wisdom or lifelong learning tip as a quote inside quotation marks (1–2 sentences) from a book about personal growth, knowledge, education, or intellectual development followed by the book title and author.'
+  };
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+  
+  // If we have a specific prompt, use it; otherwise, create a generic one
+  const prompt = prompts[promptType] || 
+    `Generate a practical, actionable ${mappedCategory} ${contentType} that provides valuable advice. Make it specific, ethical, and focused on real personal growth. Format as a catchy title followed by 1-3 paragraphs of clear instructions with real examples.`;
+  
+  return prompt;
+}
+
+/**
+ * Move published content to deleted status for a specific category
+ * @param {String} categoryId - Category ID to move content for
+ * @param {Number} count - Number of items to move (default: 10)
+ * @returns {Object} Summary of moved content
+ */
+exports.movePublishedToDeleted = async (categoryId, count = 10) => {
+  try {
+    const DeletedContent = require('../models/deletedContent.model');
+    
+    // Find published content for this category
+    const publishedContent = await Content.find({ 
+      status: 'published',
+      category: categoryId
+    })
+    .sort('-createdAt') // Starting with the newest published content
+    .limit(count);
+    
+    console.log(`Found ${publishedContent.length} published content items for category ${categoryId}`);
+    
+    let movedCount = 0;
+    
+    // Process each content item
+    for (const content of publishedContent) {
+      try {
+        // Create a copy in DeletedContent collection
+        const contentData = content.toObject();
+        delete contentData._id; // Remove the original _id
+        contentData.originalId = content._id; // Store the original ID for reference
+        contentData.deletedAt = new Date();
+        
+        // Save to DeletedContent collection
+        await DeletedContent.create(contentData);
+        
+        // Delete from Content collection
+        await Content.findByIdAndDelete(content._id);
+        
+        movedCount++;
+      } catch (error) {
+        console.error(`Error moving content item ${content._id}:`, error);
+      }
+    }
+    
+    return {
+      categoryId,
+      totalFound: publishedContent.length,
+      movedToDeleted: movedCount
+    };
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};
+  } catch (error) {
+    console.error(`Error moving published content to deleted for category ${categoryId}:`, error);
+    throw error;
+  }
+};
+
+module.exports = {
+  generateWithAI: exports.generateWithAI,
+  findRecyclableContent: exports.findRecyclableContent,
+  recycleContent: exports.recycleContent,
+  scheduleContent: exports.scheduleContent,
+  generateDailyContent: exports.generateDailyContent,
+  generateMultipleContent: exports.generateMultipleContent,
+  getPromptForCategoryAndType: exports.getPromptForCategoryAndType,
+  movePublishedToDeleted: exports.movePublishedToDeleted
+};

@@ -1,0 +1,254 @@
+Kategoriler
+
+Hacks
+server: {
+  proxy: {
+    '/api': {
+      target: 'http://localhost:3000', // Your backend server address
+      changeOrigin: true,
+      secure: false
+    }
+  }
+}
+
+
+Hacks 2
+
+Tips
+
+
+Tips 2
+
+Manuel - Trend Hacks
+
+Hacks 2
+Alt Kategoriler
+Tinder Hacks
+Tinder Hacks
+Travel Hacks
+Travel Hacks
+Mind Hacks
+Mind Hacks
+Loophole Hacks
+Loophole Hacks
+Business Hacks
+Business Hacks
+Promptlar
+Tinder Hacks - Tekli Prompt
+Generate a completely unique and clever Tinder hack that feels like a cheat code for making a powerful first impression, starting engaging conversations, and getting matches to meet in person. The hack must be so unexpected, smart, and bold that most people wouldn’t dare think of it—but when they hear it, they’ll say ‘That’s actually brilliant.’ Avoid generic profile tips, recycled openers, or strategies that are often repeated. Favor hacks that are ultra-specific, rarely shared, and psychologically sharp. Surprise the reader. Make them say ‘I’ve never seen anything like this.’ Each hack should be exactly one paragraph and no more than 50 words. Use plain language. No title. Generate only one output.
+Tinder Hacks - Çoklu Prompt (10 adet)
+Act as a Tinder strategist who reveals clever and unconventional tricks for making unforgettable first impressions, starting irresistible conversations, and converting matches into real-life meetups. Share 10 unique and creative Tinder hacks (1 paragraph each, max 50 words, separated by exactly one blank line) that feel like cheat codes for modern dating. Each hack must be ultra-specific, psychologically sharp, and so bold that most people wouldn’t dare think of it—but once they read it, they’ll say “That’s actually brilliant.” Avoid generic profile advice, overused openers, or recycled dating tips. Favor ideas that are unexpected, precise, and engineered for maximum impact. Use the examples below as inspiration for style, tone, and creativity (but do not copy them):
+
+* Use a photo of you laughing naturally while a woman is slightly blurred in the background. It signals you’re fun, social, and women like being around you—without showing off.
+* First message hack: “You seem like trouble. I’m in.” It’s playful, bold, and invites intrigue—way better than “Hey” or “How are you?”
+* Add one mysterious line in bio: “Tell me what you’d do if we had 24 hours in Paris.” It triggers imagination and makes you stand out.
+* Want her to imagine meeting you? Drop this line: “We’d either have insane chemistry… or ruin a whole coffee shop with awkward silence. Worth testing, right?”
+* If she goes cold, revive it with: “My mom saw your profile and already likes you. Don’t mess this up.” It’s funny, unexpected, and reopens curiosity.
+* Photo hack: Add one with you giving a toast at a party or wedding. Signals charisma, leadership, and that people trust you with a mic.
+* Post a story-style photo on Tinder where half your face is visible. Humans are wired to complete faces. Curiosity boosts swipes.
+* If she has a pet in her profile, message: “Your dog/cat looks like it judges people perfectly. What did it think of me?”
+* To make her smile instantly, send: “Let’s get one thing clear—I get custody of the Spotify playlist if we break up.”
+* Use: “You seem like you’d either ruin my life or upgrade it dramatically. Both sound fun. Coffee?”
+
+Each hack must be exactly one paragraph, written in plain, casual English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+Travel Hacks - Tekli Prompt
+Act as a travel expert who knows clever tricks to save time, money, or stress while exploring the world. Share one unique and practical travel hack that feels like a hidden advantage. It should be simple, unexpected, and genuinely useful. Avoid generic advice. Favor lesser-known, creative strategies. Write in one paragraph, no more than 50 words. Use plain language. Generate only one output.
+Travel Hacks - Çoklu Prompt (10 adet)
+Act as a travel expert who knows clever tricks to save time, money, or stress while exploring the world. Share 10 unique and practical travel hacks (1 paragraph each, max 50 words, separated by exactly one blank line) that feel like hidden advantages. Each hack must be simple, unexpected, and genuinely useful. Avoid generic advice. Favor lesser-known, creative strategies. Use the examples below as inspiration for style, tone, and creativity (but do not copy them):
+
+* Need a last-minute hotel stay? Hotels prefer filling empty rooms at half price rather than leaving them vacant. Call a few hotels, ask for tonight’s rate, and mention you’ll book if they cut the price in half. One will likely agree!
+* On flights, seats near emergency exits usually cost more due to extra legroom. But if they’re empty, ask to move there. According to flight rules, someone must sit there and accept the emergency protocol. If you agree, you’ll sit for free.
+* If someone in front of you reclines too far on a plane or bus, open the air vent above you fully and angle it directly at their head. They’ll feel uncomfortable and likely move the seat back up.
+* Booking round-trip flights? Sometimes two one-way tickets with different airlines are cheaper. Mix & match manually—it’s often overlooked.
+* Want to fly with liquids beyond the 100ml rule? Freeze them solid. Airport security often allows frozen items.
+* Want a better Airbnb rate? Message the host privately and say “I’ll book right now if you drop the service fee—let’s go direct.” Most agree to avoid platform cuts.
+* Want the cheapest hotel price? Search in incognito mode and change your device’s IP with a VPN to a country with weaker currency. Prices adjust.
+* Want to travel with no luggage fee at all? Wear layered outfits and stuff your pockets. Technically, they can’t charge for what’s on your body.
+* Want to avoid airline check-in queues? Use the business class counter and say, “They told me to come here because the economy line was too long.” It works more than you’d expect.
+* Need airport lounge access without status? Download a delay-tracking app and screenshot a random “delayed” flight. Show it at the desk—they often let you in with sympathy.
+
+Each hack must be exactly one paragraph, written in plain, casual English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+Mind Hacks - Tekli Prompt
+Act as a master of influence and behavioral psychology. Share one unique and clever mind hack that feels like a cheat code for manipulating thoughts or behaviors. It should be unexpected, effortless, and give instant psychological advantage. Avoid common mindset tips or repeated tricks. Favor specific ideas that exploit cognitive biases or social dynamics. Surprise the reader. Make them say ‘That’s brilliant.’ Write in one paragraph, no more than 50 words. Use plain language. Generate only one output.
+Mind Hacks - Çoklu Prompt (10 adet)
+Act as a master of influence and behavioral psychology. Share 10 unique and clever mind hacks (1 paragraph each, max 50 words, separated by exactly one blank line) that feel like cheat codes for manipulating thoughts or behaviors. Each hack must be unexpected, effortless, and provide instant psychological advantage. Avoid common mindset tips or repeated tricks. Favor specific ideas that exploit cognitive biases or social dynamics. Surprise the reader. Make them say ‘That’s brilliant.’ Use the examples below as inspiration for style, tone, and creativity (but do not copy them):
+
+* Don’t get your fortune told. It clouds your own instincts. Fortune tellers don’t predict your future—they shape it by planting ideas in your mind. By asking them about your future, you unconsciously block your own intuition, which is far more accurate.
+* The most powerful success skill? Mastering your mind. Thoughts and emotions shape every outcome. We can’t control life—but we can control how we respond. Every top entrepreneur, warrior, or leader succeeded by first mastering their inner world. Outer success starts from inner discipline.
+* To detect a lie, ask a direct question that ends with “right?” like, “You’ve been smoking without telling me, right?” This technique is used in cross-examinations. Watch for micro-expressions—liars often break eye contact when caught off guard.
+* When you’re stressed or sad, remember the 90/10 rule: 10% of your pain comes from what happened, 90% comes from how you interpret it. Change the way you see the event, and you can ease the pain.
+* Before debating someone, ask yourself, “Can this person even grasp what I’m trying to say?” If not, save your energy. Communication only works when both people have the mental space to understand each other.
+* Curious what people say about you when you’re not around? Enable the “Live Listen” feature on your AirPods, leave your phone on the table, and go to the restroom. You’ll hear the entire conversation through your earbuds.
+* Having trouble choosing between two options? Flip a coin—not to decide, but to reveal your true desire. While the coin’s in the air, you’ll find yourself hoping for one outcome. That’s your real choice.
+* If you don’t know this manipulation trick, you might fall for a sociopath. They’ll shower you with attention, then suddenly go cold. You’ll crave their attention back and eventually feel forced to respond just to keep it. Be aware of this emotional trap.
+* Use the “Yes Ladder” in persuasion. Start with questions they’ll definitely agree to. Each “yes” warms the brain for the next one—until the final ask feels natural.
+* Want someone to remember you? Subtly repeat their name three times in a short conversation. It creates subconscious familiarity and trust.
+
+Each hack must be exactly one paragraph, written in plain, casual English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+Loophole Hacks - Tekli Prompt
+Act as a loophole expert who finds legal and clever ways to beat systems, policies, or everyday rules. Share one unexpected and specific loophole that most people overlook. It should feel smart, unfairly effective, but still legal. Avoid anything widely known or basic. Favor surprising and creative workarounds. Write in one paragraph, no more than 50 words. Use plain language. Generate only one output.
+Loophole Hacks - Çoklu Prompt (10 adet)
+Act as a loophole expert who finds legal and clever ways to beat systems, policies, or everyday rules. Share 10 unexpected and specific loopholes (1 paragraph each, max 50 words, separated by exactly one blank line) that most people overlook. Each hack should feel smart, unfairly effective, but still legal. Avoid anything widely known or basic. Favor surprising and creative workarounds. Use the examples below as inspiration for style, tone, and creativity (but do not copy them):
+
+* If a store accuses you of theft, don’t let them search your bag. Say you’ll wait for the police. Let them search only when police arrive and document it. This protects your rights—and if they’re wrong, you can sue for emotional distress or defamation.
+* No reservation at a restaurant? Walk in with confidence, give your name, and say you booked under it. Staff often keep spare tables for errors — your confidence will make them assume it’s theirs.
+* If scammers call, play along and agree to meet. Then call the police and bring them to the handoff. If scammers later ask you to drop the case, tell them you’ll do it for the same amount they tried to steal.
+* Need fast customer service from a big company? Select the “cancel service” option in the phone menu. It always routes you to a real human instantly.
+* Before your driving exam, ask a friend to drive behind you and leave extra space at stoplights. That way, if you need to stop on a hill, you won’t worry about rolling back into another car. You’ll be more relaxed and make a smoother start.
+* Need urgent shipping? Order a random cheap item with 1-day delivery, then call and ask to add your real item to the same shipment “to save resources.” It often works.
+* Need to exit a subscription you forgot to cancel? Claim your child “accidentally” signed up while playing. Most companies will refund instantly.
+* If an event is sold out, go to the venue and say your friend went in with both tickets by mistake. Most staff will just let you in to avoid drama.
+* Shopping online? Add items to your cart and leave them for a few hours. Most sites send a discount code to “win you back.”
+* Need a second free trial? Sign up with a new email and misspell your name slightly. Most systems won’t detect it.
+
+Each hack must be exactly one paragraph, written in plain, casual English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+Business Hacks - Tekli Prompt
+Act as a business visionary who creates scalable, creative business ideas for everyday people. Share one unique, realistic, and high-potential business hack that solves a real problem and could grow into a billion-dollar startup within a few years. The idea should be built around a digital product, platform, mobile app, or website—even if it includes a physical component. Avoid generic advice or small side hustles. Focus on clever ideas with serious growth potential. Surprise the reader. Make them say ‘This could actually work.’ Write in one paragraph, no more than 50 words. Use plain language. Generate only one idea.
+Business Hacks - Çoklu Prompt (10 adet)
+Act as a business visionary who creates scalable, creative business ideas for everyday people. Share 10 unique, realistic, and high-potential business hacks (1 paragraph each, max 50 words, separated by exactly one blank line) that solve real problems and could grow into billion-dollar startups within a few years. Each idea must be built around a digital product, platform, mobile app, or website—even if it includes a physical component. Avoid generic advice or small side hustles. Focus on clever ideas with serious growth potential. Surprise the reader. Make them say ‘This could actually work.’ Use the examples below as inspiration for style, tone, and creativity (but do not copy them):
+
+* Create the ultimate birthday party delivery app. Build a mobile app that lets users order birthday cakes, drinks, and gifts in one go—with guaranteed delivery within 1 hour. Perfect for last-minute home celebrations. A must-have for modern birthdays.
+* Open a gym-focused restaurant across from the city’s biggest fitness center. Serve protein shakes, oatmeal bowls, omelets, and chicken & rice plates tailored for athletes. Design your menu for pre- and post-workout nutrition, so people naturally stop by your place as part of their fitness routine.
+* Create a web app that shows investors which area they should open their business in. For example, if someone wants to open a bakery, they can enter the city and sector (bakery) into the app. The app analyzes data from Google Maps and shows which areas need a bakery.
+* Build an app that lets people queue one song at partnered cafes or bars—only while they’re there. Their song plays when it’s their turn. Users access it free with ads; venues pay subscriptions. It’s social, location-tied, and designed for viral adoption.
+* Build a dating app with no photos or names. Match users based on a 50-question compatibility test. They chat anonymously, and only if both agree, their photos are revealed. If one declines, the chat ends. Suspense-driven, filtered connection—perfect for deeper dating.
+* Build a social app where users write down their dreams and get anonymously matched with others who share the same goals. Two people who both want to become sci-fi writers can chat and support each other. Connections are made around shared visions, not just location or looks.
+* Create a mobile app that replaces the phone’s lock screen with a learning gate. Users must answer 3 quick questions from their chosen field—like English or math—before unlocking their phone. Micro-learning happens dozens of times daily without extra effort.
+* Build a travel app that lets users set rules like “buy any flight from Istanbul to Serbia under $25 for the weekend.” Users prepay and the app purchases the ticket automatically when a matching deal appears. Smart automation for spontaneous travel lovers.
+* Develop an investment insights app that analyzes satellite imagery over time to detect patterns of urban expansion. It shows where cities are growing and predicts which land areas will rise in value. A tool that turns data into real estate foresight.
+* Open a two-story venue: coffee shop downstairs, 90s arcade upstairs. Each coffee purchase includes one free token. Extra tokens are sold separately. It’s cozy, nostalgic, and fun—a space where caffeine meets childhood joy. Perfect for city centers and student zones.
+
+Each hack must be exactly one paragraph, written in plain, casual English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+Hacks
+Alt Kategoriler
+Dating Hacks
+Dating Hacks
+Money Hacks
+Money Hacks
+Power Hacks
+Power Hacks
+Survival Hacks
+Survival Hacks
+Promptlar
+Dating Hacks - Tekli Prompt
+Act as a world-class seduction tactician hired by a discreet elite client. Your job is to reveal one manipulative but legal psychological trick that gives men an instant edge in dating. The hack should be shocking, clever, and unconventional—something most people would never dare say out loud. It must be designed specifically for men to gain romantic advantage with minimal effort. No basic advice. No recycled tips. Just one brutally effective life hack in plain language. It should be exactly one paragraph and no more than 50 words. No title. Generate only one output.
+Dating Hacks - Çoklu Prompt (10 adet)
+Act as a world-class seduction tactician hired by a discreet elite client. Your job is to generate 10 manipulative but legal psychological tricks (1 paragraph each, max 50 words, separated by exactly one blank line) that give men an instant edge in dating. Each hack must be shocking, clever, and unconventional—something most people would never dare say out loud. The tricks must be specifically designed for men to gain romantic advantage with minimal effort.
+Use the examples below as inspiration for style, tone, and boldness (but do not copy them):
+
+* If your partner cheats on you, say you cheated before and always felt guilty. Tell them their betrayal feels like karma and now the relationship feels complete. It’s the fastest way to reverse the emotional damage.
+* Think she’s cheating but not sure? Send an anonymous gift with a note saying “To the love of my life.” As soon as it’s delivered, see if she calls to thank you. If she doesn’t, your suspicion is probably right.
+* Keep a small gift—like a ring or necklace—in your wallet as an emergency tool. During a serious argument, pull it out and say, “I actually bought this for you.” They’ll feel guilty for fighting on the day you were planning a surprise.
+* Missing your ex but too proud to text? Create an anonymous account and message: “If you still think of me too, maybe we deserve one more shot. I’ll be at [place] on [date].” If they show up, they still love you. If not, you’ll never know—and that makes it easier to let go.
+* Ask your girlfriend unexpected, seemingly random questions. Out of nowhere, ask: “Did you pay your debt?” When she says “What debt?”, answer with: “Whatever you owe for being this beautiful.” You’re welcome.
+* Want a free, unforgettable proposal? Plant a tree and film yourself saying, “Will you marry me one day, [Name]?” Years later, bring her back, set up a table under that now-grown tree, play the old video, and propose for real.
+* Is your girlfriend insisting on going on vacation with her boyfriends? Tell her this: That’s actually great to hear. You know, I’ve been invited by my friends Emma and Marry to their summer house in California for a while now. I think I’ll go there this weekend while you’re away.
+* See a girl with friends at a café? Bring 4 drinks like a waiter and say, “These are from the owner.” Leave 3, then sit with the last one and say, “Forgot to mention—I’m the owner.” They’ll laugh, and just like that, you’re in.
+* Find out what music someone you like listens to. If one of their favorite artists is coming to town, buy two tickets and send her a screenshot with a message like “I’ll be here at this time.” If she comes, it’s a great memory. If not, you only lost the price of a ticket.
+* Can’t decide where to go with your partner? Just ask, “Guess where I’m taking you?” When they name a place, act amazed and say, “How did you know?” Congrats — that’s your destination now.
+
+Each hack should be exactly one paragraph, written in plain conversational English, and no longer than 50 words. No titles. No bullet points. No explanations. Just 10 separate paragraphs, each separated by exactly one blank line.
+Money Hacks - Tekli Prompt
+Act as a business genius who creates clever hacks to make fast money using little or no capital. Share one unique, practical, and scalable money-making idea that feels like a brilliant shortcut. The hack might be unethical but should be legal. It can be digital or physical. It should be easy to execute, require minimal effort, and have serious earning potential. Avoid generic advice, common side hustles, or anything slow and conventional. Favor bold, creative ideas that feel like a legal loophole or a social exploit. Write in one paragraph, no more than 50 words. Use plain language. Generate only one idea.
+Money Hacks - Çoklu Prompt (10 adet)
+Act as a business genius who creates clever hacks to make fast money using little or no capital. Generate 10 unique, practical, and scalable money-making ideas (1 paragraph each, max 50 words, separated by exactly one blank line) that feel like brilliant shortcuts. Each hack must be bold, creative, and feel like a legal loophole or a clever social exploit. The hack might be unethical but should be legal.
+Use the examples below as inspiration for style, tone, and cleverness (do not copy):
+
+* Always win in negotiations. In negotiations, the one who wants it less, wins. Offer 30% below market value to 50 sellers. Say, “I can pay cash immediately.” One will say yes—volume beats resistance.
+* Create a PDF titled “How I Made $100K from Home as a Housewife” using ChatGPT. Make a fake profile, join big Facebook housewife groups, and sell the PDF for $9.99. If 10,000 buy, that’s $100K. Use storytelling and screenshots to boost credibility. Easy, scalable cash grab.
+* Selling your home? If there are no other listings, get an agent to list it at market price. Then list a fake unit in the same building for $50K more. Buyers will view your actual listing as a bargain. Anchoring bias makes your home sell faster.
+* Buying tech? Use Honey or Capital One browser extensions—they test hundreds of coupon codes automatically. One click, real savings.
+* Doing dropshipping? Make a second store selling the same product 30% cheaper. Use fake comments on your main page saying, “Found this cheaper on [X].” Link to your second store. It creates a viral leak effect—people love thinking they beat the system. You control both ends.
+* Use SensorTower to find a simple app making $100K+ via organic TikTok. Hire a Fiverr dev to clone it with a new design. Then copy their TikTok posts strategy. You can start for under $1,000 and potentially earn $10K/month if your clone goes mildly viral.
+* Find a viral TikTok store selling one product. Use reverse image search to find the item on a cheaper supplier site. Launch your own store, copy their videos with small changes, and undercut their price. Even capturing half their traffic can earn you serious monthly profit.
+* Before buying anything online, add it to your cart and leave it there for 24 hours. Most websites will email you a discount just to close the sale.
+* Found a cheap item on Amazon? Check if it's being drop-shipped from AliExpress. If yes, buy directly from there for half the price.
+* Use AI to generate low-content books (journals, planners, coloring books). Upload them to Amazon KDP with trending titles. Zero inventory, endless upside.
+
+Each hack must be exactly one paragraph, written in plain conversational English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+Power Hacks - Tekli Prompt
+Act as a master of psychological strategy and social advantage. Share one clever and practical hack that gives someone instant influence, control, or an edge in real-world situations. It should be unexpected, easy to apply, and genuinely useful. Avoid clichés or common tips. Favor lesser-known, creative strategies. Surprise the reader. Make them say ‘I’ve never thought of that before.’ Write in one paragraph, no more than 50 words. Use plain language. Generate only one idea.
+Power Hacks - Çoklu Prompt (10 adet)
+Act as a master of psychological strategy and social advantage. Generate 10 clever and practical hacks (1 paragraph each, max 50 words, separated by exactly one blank line) that give someone instant influence, control, or an edge in real-world situations. Each hack must be unexpected, easy to apply, and genuinely useful. Favor lesser-known, creative strategies over clichés or common advice. Every hack should surprise the reader and make them say, “I’ve never thought of that before.”
+Use the examples below as inspiration for style, tone, and creativity (but do not copy):
+
+* If you ever compete on Who Wants to Be a Millionaire?, add your ex as your phone-a-friend. If you know the final answer without using it, call your ex before locking it in—just to say you’re about to win a million. That’s alpha behavior.
+* Don’t say “Sorry I’m late,” say “Thank you for your patience.” Apologies make you look weak in professional settings. Gratitude reframes the same message while making you seem confident and emotionally intelligent. People remember how you made them feel—not what you said.
+* In a business meeting, press your phone’s side button to fake a call. Say, “Yes, $7 million works. I’ll call back after my meeting.” Others will assume you’re handling huge deals. It’s a bold trick to project status and make people take you more seriously.
+* If someone you know verbally attacks you, don’t respond. Instead, wait for them to finish, then say, “So I guess what I heard about you is true,” and walk away. It’ll bother them for days, wondering what people might be saying behind their back.
+* If someone mocks you, don’t get angry. That’s what they want. Instead, joke about yourself even more. If they say, “You’re so skinny you might fly away,” reply, “No need to touch me, I’ll fly if you just blow on me.” Self-mockery kills their fun.
+* Even if you don’t smoke, always carry a lighter. During smoke breaks, offer it to strangers. You’ll instantly make connections without even trying.
+* When meeting someone you want to impress, glance at your watch mid-conversation and say, “I have 5 minutes before I call my lawyer.” You don’t need a lawyer—just status.
+* At networking events, carry two phones. Casually place both on the table. People will assume you’re managing something important.
+* Before meeting someone important, Google their alma mater, then casually mention a professor or class there. You instantly become “one of them.”
+* When someone constantly interrupts you, stop talking entirely. Let the silence build until they get uncomfortable and invite you to speak
+
+Each hack must be exactly one paragraph, written in plain, casual English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+
+Survival Hacks - Tekli Prompt
+Act as a survival expert who reveals clever and unconventional tricks for staying alive, safe, or resourceful in extreme or unexpected situations. Share one practical and creative survival hack that most people don’t know. It should be simple, effective, and based on real-world logic. Avoid generic advice or commonly repeated tips. Favor ideas that feel surprisingly useful and resourceful. Write in one paragraph, no more than 50 words. Use plain language. Generate only one idea.
+Survival Hacks - Çoklu Prompt (10 adet)
+Act as a surviva// Changed from
+async function generateDailyContent(perCategory = 10) {
+
+// To
+exports.generateDailyContent = async (perCategory = 10) => {// Changed from
+async function generateDailyContent(perCategory = 10) {
+
+// To
+exports.generateDailyContent = async (perCategory = 10) => {l expert who reveals clever and unconventional tricks for staying alive, safe, or resourceful in extreme or unexpected situations. Share 10 practical and creative survival hacks (1 paragraph each, max 50 words, separated by exactly one blank line) that most people don’t know. Each hack must be simple, effective, and based on real-world logic. Avoid generic advice or commonly repeated tips. Favor ideas that feel surprisingly useful and resourceful. Use the examples below as inspiration for style, tone, and creativity (but do not copy them):
+
+* Protect your car from theft with a simple trick. Buy a lawyer’s robe and briefcase online. Leave them visibly on the front passenger seat. No one wants to mess with a lawyer’s car. Congrats—your car is now less likely to get stolen.
+* Someone follows you after a traffic fight? Gain distance, pull over, and lie in front of your car like you’re dead. They’ll either keep driving or panic thinking they hit someone. Fear of legal trouble beats road rage. Drastic move—but it works.
+* If a dog attacks you, quickly wrap your jacket around your arm and let it bite there. Push your arm forward to reduce its bite force. If it’s a dangerous breed, remember the most sensitive spot is its eyes. Hopefully, you’ll never need this tip.
+* If a wild animal suddenly runs in front of your car on the highway, don’t swerve or brake hard—it can flip your car. Hold the steering wheel firmly and brake gently. It’s safer to hit the animal than to lose control.
+* If you feel like someone is following you on the street, make four right turns to loop back. Share your live location with someone. If the person is still behind you, enter the nearest store and call the police.
+* If someone is stabbed, never pull the knife out. It might be the only thing stopping the bleeding. Keep the person calm, don’t move the blade, and get them to the hospital. Doctors can remove it safely. This tip could literally save a life.
+* If someone keeps harassing or threatening you even after complaints, try this: record tough male voices from movies saying intimidating lines. Use a payphone to call the person and play a different recording each day. Legally, it’s self-defense—and it might scare them off.
+* Drowning is silent. Victims don’t scream—they just bob in and out of water. Approach from behind to avoid being pulled down. Grab their hair and lift them up. It’s not pretty, but it could save both of you. Forget movies—this is how it really happens.
+* If someone’s about to attack you, glance behind them and say “No problem, officer.” They’ll instinctively look back. In that second, hit hard and run fast.
+* Home alone and spooked by a noise? Open a YouTube tab with loud barking dogs. Big dogs. Let your "security system" do the work.
+
+Each hack must be exactly one paragraph, written in plain, casual English, and no more than 50 words. No titles. No bullet points. No extra commentary. Just 10 separate paragraphs, each separated by exactly one blank line.
+
+Tips
+Alt Kategoriler
+Dating & Relationships
+Dating & Relationships
+Finance & Wealth Building
+Finance &  Wealth Building
+Mindset & Motivation
+Mindset &  Motivation
+Social Skills
+Social Skills
+Fitness & Nutrition
+Fitness &  Nutrition
+Promptlar
+Dating & Relationships - Tekli Prompt
+Generate one random and practical dating or relationship tip as a quote inside quotation marks (1–2 sentences) from a book about love, attraction, communication, or relationship dynamics followed by the book title and author. Leave one line of space between the quote and the book reference. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks. Generate only one output. 
+
+Dating & Relationships - Çoklu Prompt (10 adet)
+Generate 10 random and practical dating or relationship tips as quotes inside quotation marks (1–2 sentences each) from different books about love, attraction, communication, or relationship dynamics followed by the book title and author. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks. 
+Important: Output only the 10 quotes exactly as requested. Use exactly one empty line between each output. No introductions, no titles, no closing comments.
+Finance & Wealth Building - Tekli Prompt
+Generate one random and practical finance or wealth building tip as a quote inside quotation marks (1–2 sentences) from a book about money management, investing, financial freedom, or personal finance followed by the book title and author. Leave one line of space between the quote and the book reference. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks. Generate only one output.
+Finance & Wealth Building - Çoklu Prompt (10 adet)
+Generate 10 random and practical finance or wealth building tips as quotes inside quotation marks (1–2 sentences each) from different books about money management, investing, financial freedom, or personal finance followed by the book title and author. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks.
+Important: Output only the 10 quotes exactly as requested. Use exactly one empty line between each output. No introductions, no titles, no closing comments.
+Mindset & Motivation - Tekli Prompt
+Generate one random and practical mindset or motivation tip as a quote inside quotation marks (1–2 sentences) from a book about personal power, resilience, goal setting, or self-discipline followed by the book title and author. Leave one line of space between the quote and the book reference. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks. Generate only one output.
+Mindset & Motivation - Çoklu Prompt (10 adet)
+Generate 10 random and practical mindset or motivation tips as quotes inside quotation marks (1–2 sentences each) from different books about personal power, resilience, goal setting, or self-discipline followed by the book title and author. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks. 
+Important: Output only the 10 quotes exactly as requested. Use exactly one empty line between each output. No introductions, no titles, no closing comments.
+Social Skills - Tekli Prompt
+Generate one random and practical social skills tip as a quote inside quotation marks (1–2 sentences) from a book about communication, charisma, networking, or emotional intelligence followed by the book title and author. Leave one line of space between the quote and the book reference. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks. Generate only one output.
+Social Skills - Çoklu Prompt (10 adet)
+Generate 10 random and practical social skills tips as quotes inside quotation marks (1–2 sentences each) from different books about communication, charisma, networking, or emotional intelligence followed by the book title and author. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks.
+Important: Output only the 10 quotes exactly as requested. Use exactly one empty line between each output. No introductions, no titles, no closing comments.
+Fitness & Nutrition - Tekli Prompt
+Generate one random and practical fitness or nutrition tip as a quote inside quotation marks (1–2 sentences) from a book about exercise, healthy habits, diet science, or physical performance followed by the book title and author. Leave one line of space between the quote and the book reference. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks. Generate only one output.
+Fitness & Nutrition - Çoklu Prompt (10 adet)
+Generate 10 random and practical fitness or nutrition tips as quotes inside quotation marks (1–2 sentences each) from different books about exercise, healthy habits, diet science, or physical performance followed by the book title and author. Focus on lesser-known or underrated books along with bestsellers to ensure variety. Do not use any other punctuation in the output other than period, comma, and quotation marks.
+Important: Output only the 10 quotes exactly as requested. Use exactly one empty line between each output. No introductions, no titles, no closing comments.
+Sayfalar
+Dating & Relationships

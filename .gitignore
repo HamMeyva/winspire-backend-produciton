@@ -1,0 +1,4 @@
+node_modules
+windscribe-backend/admin-dashboard/node_modules
+windscribe-backend.tar.gz
+.env
