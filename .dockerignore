@@ -1,0 +1,24 @@
+# Git and Docker specific
+.git
+.gitignore
+.dockerignore
+Dockerfile
+
+# Node.js
+node_modules
+npm-debug.log
+*.log
+
+# Environment files
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Archives
+*.tar.gz
+
+# Admin dashboard - will be built separately
+admin-dashboard/
