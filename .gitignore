@@ -2,3 +2,7 @@ node_modules
 windscribe-backend/admin-dashboard/node_modules
 windscribe-backend.tar.gz
 .env
+setup-admin.js
+test-api.js
+test-login.js
+update-admin.js

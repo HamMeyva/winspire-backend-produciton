@@ -7,10 +7,16 @@ const path = require('path');
 // Load environment variables
 dotenv.config();
 
+// Hardcoded Production MongoDB URI
+const PROD_MONGODB_URI = 'mongodb+srv://winspiredbadin:SR19J0IRQj5qn@chefmagic-cluster.ifrl4fr.mongodb.net/chefmagic_db?retryWrites=true&w=majority';
+
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
+  .connect(PROD_MONGODB_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+    console.log('Connected DB Name:', mongoose.connection.name); // Log DB name
+  })
   .catch((err) => {
     console.error('MongoDB connection error:', err);
     process.exit(1);
@@ -83,16 +89,19 @@ async function setupAdmin() {
     console.log(`Setting up admin with email: ${adminEmail}`);
     
     // Check if admin already exists
+    console.log(`Attempting to find admin with query: { email: "${adminEmail}" } in collection: ${User.collection.name}`);
     const existingAdmin = await User.findOne({ email: adminEmail });
     
     if (existingAdmin) {
+      console.log('Found existing admin user:', JSON.stringify(existingAdmin, null, 2));
       console.log('Updating existing admin user...');
       
       // Hash the password from env
       const hashedPassword = await bcrypt.hash(adminPassword, 12);
       
       existingAdmin.password = hashedPassword;
-      await existingAdmin.save();
+      const saveResult = await existingAdmin.save();
+      console.log('Admin user save operation result:', JSON.stringify(saveResult, null, 2));
       
       console.log(`Admin user updated with password from environment variables`);
       console.log(`Admin ID: ${existingAdmin._id}`);
@@ -125,6 +134,7 @@ async function setupAdmin() {
       
       await admin.save();
       console.log(`New admin user created with credentials from environment variables`);
+      console.log('New admin user data:', JSON.stringify(admin, null, 2)); // Log newly created admin data
       console.log(`Admin ID: ${admin._id}`);
       
       // Update the .env file with the admin ID

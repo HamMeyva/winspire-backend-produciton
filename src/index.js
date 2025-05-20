@@ -42,8 +42,8 @@ app.use(stripeWebhookMiddleware);
 app.use(helmet()); // Security headers
 app.use(compression()); // Compress responses
 app.use(cors({
-  origin: '*', // DRASTIC DEBUG: Allow all origins
-  credentials: true, // Note: credentials:true with origin:'*' can be problematic but good for this test
+  origin: 'http://chefmagic-admin-dashboard.s3-website.eu-north-1.amazonaws.com', // Simplified to single string for debugging
+  credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -52,7 +52,7 @@ app.use(morgan('dev')); // HTTP request logger
 
 // Root endpoint for default health check
 app.get('/', (req, res) => {
-  res.status(200).send('OK - V3 TEST'); // Specific message for deployment confirmation
+  res.status(200).send('OK');
 });
 
 // Health check endpoint
