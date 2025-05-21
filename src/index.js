@@ -42,7 +42,11 @@ app.use(stripeWebhookMiddleware);
 app.use(helmet()); // Security headers
 app.use(compression()); // Compress responses
 app.use(cors({
-  origin: 'http://chefmagic-admin-dashboard.s3-website.eu-north-1.amazonaws.com', // Simplified to single string for debugging
+  origin: [
+    'http://chefmagic-admin-dashboard.s3-website.eu-north-1.amazonaws.com',
+    'https://admin.chefmagic.app',
+    'https://chefmagic.app'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -60,28 +64,44 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'UP', message: 'Server is running' });
 });
 
-// Apply rate limiting with different configurations for regular and admin routes
+// Regular API rate limiter - slightly increased limit
 const apiLimiter = rateLimit({
-  windowMs: process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000, // 15 minutes default
-  max: process.env.RATE_LIMIT_MAX || 100, // Limit each IP to 100 requests per windowMs default
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200, // Increased from 100 to 200 requests per window
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// More permissive rate limiter for admin routes
+// More permissive limiter for admin operations
 const adminLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 300, // 300 requests per minute
+  max: 1500, // Increased from 300 to 1500 for bulk operations
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// Apply rate limiters to specific routes
-app.use('/api/admin', adminLimiter); // Apply admin-specific limiter first
-app.use('/api/content/deleted', adminLimiter); // Apply admin limiter to deleted content endpoints
+// Helper function to check if request is from admin dashboard
+const isAdminOrigin = (req) => {
+  const origin = req.get('origin');
+  return origin && (
+    origin.includes('admin.chefmagic.app') || 
+    origin.includes('chefmagic-admin-dashboard')
+  );
+};
+
+// Apply admin limiter directly to admin routes
+app.use('/api/admin', adminLimiter);
+app.use('/api/content/deleted', adminLimiter);
+
+// Apply conditional rate limiting to auth routes based on origin
+app.use('/api/auth', (req, res, next) => {
+  if (isAdminOrigin(req)) {
+    return adminLimiter(req, res, next);
+  }
+  return apiLimiter(req, res, next);
+});
 
 // Apply general API limiter to all other routes
-app.use('/api/auth', apiLimiter);
 app.use('/api/users', apiLimiter);
 // app.use('/api/content', apiLimiter); // Removed rate limit for content APIs
 app.use('/api/categories', apiLimiter);
