@@ -85,7 +85,9 @@ const DailyContentGenerator: React.FC<DailyContentGeneratorProps> = ({
       }
       
       // Call the API using a properly formatted fetch request with the token
-      const refreshResponse = await fetch('/api/admin/trigger-daily-refresh', {
+      // Use the correct API URL with the configured base URL from env variables
+      const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5010/api';
+      const refreshResponse = await fetch(`${API_URL}/admin/trigger-daily-refresh`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
